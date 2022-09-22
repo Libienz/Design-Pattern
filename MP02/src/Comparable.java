@@ -1,3 +1,4 @@
 interface Comparable {
-    int compareTo(Object o1, Object o2);
+    int compareTo(FileInfo o1, FileInfo o2);
+
 }

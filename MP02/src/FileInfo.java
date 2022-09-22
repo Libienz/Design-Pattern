@@ -16,12 +16,11 @@ public class FileInfo {
 
     @Override
     public String toString() {
-        return "FileInfo{" +
-                "name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", size=" + size +
-                ", modifiedDate=" + modifiedDate +
-                '}';
+        return
+                "Name: " + name + "\n" +
+                "Type: " + type + "\n" +
+                "Size: " + size + "\n" +
+                "ModifiedDate: " + modifiedDate + "\n";
     }
 
     public String getName() {
@@ -39,4 +38,6 @@ public class FileInfo {
     public Date getModifiedDate() {
         return modifiedDate;
     }
+
+
 }
