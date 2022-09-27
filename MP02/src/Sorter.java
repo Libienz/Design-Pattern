@@ -16,11 +16,11 @@ public class Sorter {
     obj[j] 와 obj[j+1]을 비교하는데
     j번째의 값이 j+1번째의 값보다 뒤에 있어야 하면 swap!
      */
-    public void bubbleSort(FileInfo[] objs) {
+    public void bubbleSort(Object[] objs) { // object 클래스로 가능하드아 ..?
         for (int i = 0; i < objs.length - 1; i++) {
             for (int j = 0; j < objs.length - i - 1; j++) {
                 if (compare.compareTo(objs[j],objs[j+1]) > 0) { // swap
-                    FileInfo temp = objs[j];
+                    Object temp = objs[j];
                     objs[j] = objs[j + 1];
                     objs[j + 1] = temp;
                 }
