@@ -77,7 +77,7 @@ public class MainWindow extends FrameWindow implements ActionListener {
             }
             else {
                 primeThread.registerObserver(textFieldWindow);
-                removeTextFieldObserverButton.setText(TEXTFIELD_OBSERVER_ADD_BUTTON_TITLE);
+                removeTextFieldObserverButton.setText(TEXTFIELD_OBSERVER_REMOVE_BUTTON_TITLE);
                 isTextFieldRemoveTurn = true;
             }
 
@@ -92,7 +92,7 @@ public class MainWindow extends FrameWindow implements ActionListener {
             }
             else {
                 primeThread.registerObserver(labelWindow);
-                removeLabelFieldObserverButton.setText(LABELFIELD_OBSERVER_ADD_BUTTON_TITLE);
+                removeLabelFieldObserverButton.setText(LABELFIELD_OBSERVER_REMOVE_BUTTON_TITLE);
                 isLabelFieldRemoveTurn = true;
             }
 
