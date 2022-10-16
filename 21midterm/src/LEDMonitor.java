@@ -1,15 +1,15 @@
 public class LEDMonitor extends AbstractExternalDevice {
 
 
-    NotebookComputer notebook;
+    AbstractNotebookComputer notebook;
 
-    public LEDMonitor(String deviceType, NotebookComputer notebook) {
+    public LEDMonitor(String deviceType, AbstractNotebookComputer notebook) {
         super(deviceType);
         this.notebook = notebook;
     }
 
     @Override
     public double requiredSpace() {
-        return 150;
+        return notebook.requiredSpace()+150;
     }
 }

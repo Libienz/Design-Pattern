@@ -1,13 +1,13 @@
 public class HardDrive extends AbstractExternalDevice{
-    NotebookComputer notebook;
+    AbstractNotebookComputer notebook;
 
-    public HardDrive(String deviceType, NotebookComputer notebook) {
+    public HardDrive(String deviceType, AbstractNotebookComputer notebook) {
         super(deviceType);
         this.notebook = notebook;
     }
 
     @Override
     public double requiredSpace() {
-        return 40;
+        return notebook.requiredSpace()+40;
     }
 }

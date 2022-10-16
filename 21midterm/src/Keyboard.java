@@ -1,9 +1,9 @@
 public class Keyboard extends AbstractExternalDevice{
 
     //private int space =80;
-    NotebookComputer notebook;
+    AbstractNotebookComputer notebook;
 
-    public Keyboard(String deviceType, NotebookComputer notebook) {
+    public Keyboard(String deviceType, AbstractNotebookComputer notebook) {
         super(deviceType);
         this.notebook = notebook;
     }
