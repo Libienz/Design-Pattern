@@ -16,7 +16,7 @@ public class ConcreteDAO implements PasswordDAO {
             connection = DriverManager.getConnection("jdbc:sqlite:" + DB_FILE_NAME);
             statement = connection.createStatement();
             statement.setQueryTimeout(30);
-            final String table = " (URL STRING PRIMARY KEY, id text, password text)";
+            final String table = " (url text PRIMARY KEY, id text, password text)";
 
             statement.executeUpdate("DROP TABLE IF EXISTS " + DB_TABLE_NAME);
             statement.executeUpdate("CREATE TABLE " + DB_TABLE_NAME + table);
