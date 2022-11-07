@@ -1,5 +1,9 @@
 import java.util.List;
 
+//지금 부터는 passwordinfo 뿐만 아니라 일반화 시킨 여러 오브젝트가 들어올 수 있도록 refactoring 할 것
+//상속이 주 키워드임!
+
+
 public class Main {
 
     public static void main(String[] args) {
