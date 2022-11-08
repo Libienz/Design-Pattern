@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,9 +13,9 @@ public class Main {
         아래 코드 수정
         
         */
-        Preprocessor preprocessor = ;
-        Compiler compiler = ;
-        Linker linker = ;
+        Preprocessor preprocessor = new CLangPreprocessor();
+        Compiler compiler = new CLangCompiler();
+        Linker linker = new CLangLinker();
         
         // 프리프로세서, 컴파일러, 링커를 각각 따로 사용해서 exe파일 생성하고 실행
         String[] fileNames = { "a.c", "b.c", "c.c" };
@@ -43,17 +44,28 @@ public class Main {
         System.out.println("\n실행");
         exe.execute();
 
-        System.out.println("\nIDE 사용");
+        System.out.println("\nIDE 사용\n");
+
+        System.out.println("IDE에서 소스 코드 배열을 이용해서 빌드 후 실행");
 
         // 퍼사드 패턴을 이용해서 구현한 IDE 객체를 생성한 후 exe파일을 빌드하고 실행
         // IDE를 사용할 때는 배열과 리스트 버전 두 가지 빌드 함수를 각각 사용해서
         // ArrayProject.exe와 ListProject.exe를 생성하는 코드를 추가할 것
         // 배열을 리스트로 변환하는 것은 Arrays.asList() 함수 사용 가능
- 
-        /*
-        
-        코드 추가 
-        
-        */
+
+
+
+        //배열
+        IDE ide1 = new IDE(preprocessor, compiler, linker);
+        ide1.createProject("ArrayProject.exe");
+        Executable exec1 = ide1.build(code);
+        exec1.execute();
+        //리스트
+        System.out.println("\nIDE에서 소스코드 리스트를 이용해서 빌드 후 실행");
+        IDE ide2 = new IDE(preprocessor, compiler, linker);
+        ide2.createProject("ListProject.exe");
+        List<SourceCode> codes = Arrays.asList(code);
+        Executable exec2 = ide2.build(codes);
+        exec2.execute();
     }
 }

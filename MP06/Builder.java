@@ -11,9 +11,9 @@ public interface Builder {
        예: createProject()에 "new"라는 문자열이 전달되면, build()에서 생성하는 Executable의 실행 파일 이름은 "new.exe"가 됨
        createProject(), build() 함수 2개에 해당되는 함수 헤더를 아래에 작성하고, 이를 구현하는 IDE 클래스를 만들 것
      */
-     String createProject(String s);
+     void createProject(String s);
      Executable build(SourceCode[] scs);
-     Executable build(ArrayList<SourceCode> scs);
+     Executable build(List<SourceCode> scs);
      /* 
      
      함수 헤더 선언
