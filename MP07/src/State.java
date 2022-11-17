@@ -4,7 +4,7 @@ public interface State {
     void SelectBevearge();
     void addHundread();
     void addFiveHundread();
-    void addThousandHundread();
+    void addThousand();
 
 
 }

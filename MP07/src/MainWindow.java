@@ -18,6 +18,8 @@ public class MainWindow extends FrameWindow implements ActionListener {
     private static final String FIVE_HUNDRED_BUTTON_TITLE = "500";
     private static final String RETURN_CHANGE_BUTTON_TITLE = "Return Changes";
     private static final String SELECT_BEVERAGE_BUTTON_TITLE = "Select a beverage";
+    private static final String MAIN_TITLE = "Main Window";
+
     private JLabel balanceLabel;  // 현재 투입 금액을 나타내는 화면
     private JLabel msgLabel; // 기타 메시지를 보여주기 위한 화면
     private MyButton hundredButton;
@@ -32,26 +34,65 @@ public class MainWindow extends FrameWindow implements ActionListener {
     private State state;
     private State state_0;
     private State state_less_500;
+    private State state_500;
     private State state_less_1000;
     private State state_equal_or_more_1000;
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public State getState_0() {
+        return state_0;
+    }
+
+    public State getState_less_500() {
+        return state_less_500;
+    }
+
+    public State getState_500() {
+        return state_500;
+    }
+
+    public State getState_less_1000() {
+        return state_less_1000;
+    }
+
+    public State getState_equal_or_more_1000() {
+        return state_equal_or_more_1000;
+    }
 
     private int balance; //얘가 현재 금액인듯
 
     public MainWindow(String title) {
-        super();
-        createWindow(title, X, Y, WIDTH, HEIGHT);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-        state_0 = new State_0();
-        state_less_500 = new State_Less_500();
-        state_less_1000 = new State_Less_1000();
-        state_equal_or_more_1000 = new StateEqaulOrMore1000();
 
-        balance = 0;
+            super();
+            createWindow(title, X, Y, WIDTH, HEIGHT);
+            addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {System.exit(0);}});
+
+            //질문 : 이것도 결국 스테이트 수정할 때마다 .. 수정되고 늘어나는 코드 -> OCP위반같은데 .. 의미가 있나?
+            state_0 = new State_0(this);
+            state = state_0;
+            state_less_500 = new State_Less_500(this);
+            state_500 = new State_500(this);
+            state_less_1000 = new State_Less_1000(this);
+            state_equal_or_more_1000 = new StateEqaulOrMore1000(this);
+
+            balance = 0;
+
+
+    }
+
+
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 
     public JPanel createPanel(int width, int height) {
@@ -101,105 +142,23 @@ public class MainWindow extends FrameWindow implements ActionListener {
         msgLabel.setText(msg);
     }
 
-    public void addHundred() {
-        balance += 100;
-        if (states == STATES.STATE_0) {
-            states = STATES.STATE_LESS_500;
-        }
-        else if (states == STATES.STATE_LESS_500) {
-            if (balance == 500) {
-                states = STATES.STATE_500;
-            }
-        }
-        else if (states == STATES.STATE_500) {
-            states = STATES.STATE_LESS_1000;
-        }
-        else if (states == STATES.STATE_LESS_1000) {
-            if (balance == 1000) {
-                states = STATES.STATE_EQUAL_OR_MORE_1000;
-            }
-        }
-        setBalanceText();
-        setMsgText("");
-    }
-
-    public void addFiveHundred() {
-        balance += 500;
-        if (states == STATES.STATE_0) {
-            states = STATES.STATE_500;
-        }
-        else if (states == STATES.STATE_LESS_500) {
-            states = STATES.STATE_LESS_1000;
-        }
-        else if (states == STATES.STATE_500 || states == STATES.STATE_LESS_1000) {
-            states = STATES.STATE_EQUAL_OR_MORE_1000;
-        }
-        setBalanceText();
-        setMsgText("");
-    }
-
-    public void addThousand() {
-        balance += 1000;
-        if (states == STATES.STATE_0 || states == STATES.STATE_LESS_500
-                || states == STATES.STATE_500 || states == STATES.STATE_LESS_1000) {
-            states = STATES.STATE_EQUAL_OR_MORE_1000;
-            setMsgText("");
-        }
-        else if (states == STATES.STATE_EQUAL_OR_MORE_1000) {
-            setMsgText("이미 충분한 돈이 투입되었습니다. 음료를 선택하세요");
-        }
-        setBalanceText();
-    }
-
-    public void returnChanges() {
-        if (states == STATES.STATE_LESS_500 || states == STATES.STATE_500 ||
-            states == STATES.STATE_LESS_1000 || states == STATES.STATE_EQUAL_OR_MORE_1000) {
-            states = STATES.STATE_0;
-            setMsgText("" + balance + "원을 반환합니다");
-            balance = 0;
-            setBalanceText();
-        }
-        else {
-            setMsgText("돈을 넣은 후에 눌러주세요");
-        }
-    }
-
-    public void selectBeverage() {
-        if (states == STATES.STATE_EQUAL_OR_MORE_1000) {
-            String msg = "음료를 내보냅니다. 배출구를 확인하세요.";
-            balance -= 1000;
-            if (balance > 0) {
-                msg = msg + " 거스름돈 " + balance + "원을 반환합니다.";
-                balance = 0;
-            }
-            setBalanceText();
-            setMsgText(msg);
-            states = STATES.STATE_0;
-        }
-        else if (states == STATES.STATE_0) {
-            setMsgText("돈을 넣은 후에 눌러주세요");
-        }
-        else {
-            setMsgText("1000원 이상을 넣은 후에 눌러주세요");
-        }
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == hundredButton) {
-            addHundred();
+            state.addHundread();
         }
         else if (e.getSource() == fiveHundredButton) {
-            addFiveHundred();
+            state.addFiveHundread();
         }
         else if (e.getSource() == thousandButton) {
-            addThousand();
+            state.addThousand();
         }
         else if (e.getSource() == returnChangesButton) {
-            returnChanges();
+            state.returnChanges();
         }
         else if (e.getSource() == selectBeverageButton) {
-            selectBeverage();
+            state.SelectBevearge();
         }
     }
 }
