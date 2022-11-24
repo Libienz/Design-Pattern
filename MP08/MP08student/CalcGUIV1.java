@@ -9,6 +9,7 @@ public class CalcGUIV1 extends JFrame implements ActionListener {
     final static int BUTTON_WIDTH = 50;
 
     String[] buttonText = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+", "-", "*", "/", "=" };
+
     JButton[] buttons = new JButton[buttonText.length];
     Calculator calculator;
 
@@ -44,13 +45,26 @@ public class CalcGUIV1 extends JFrame implements ActionListener {
     public JPanel getButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(5,3,10,5));
-        for (int i = 0; i < buttonText.length; i++) {
-            buttons[i] = new JButton();
+        for (int i = 0; i < 9; i++) { //숫자 버튼 생성
+            buttons[i] = new NumCommandButton(calculator,display);
             buttons[i].setText(buttonText[i]);
             buttons[i].setPreferredSize(buttonDimension);
             buttons[i].addActionListener(this);
             buttonPanel.add(buttons[i]);
         }
+        buttons[10] = new AddCommandButton(calculator,display);
+        buttons[11] = new SubtractCommandButton(calculator,display);
+        buttons[12] = new MultiplyCommandButton(calculator,display);
+        buttons[13] = new DivideCommandButton(calculator,display);
+        buttons[14] = new ResultCommandButton(calculator, display);
+
+        for (int i = 10; i < 15; i++) {
+            buttons[i].setText(buttonText[i]);
+            buttons[i].setPreferredSize(buttonDimension);
+            buttons[i].addActionListener(this);
+            buttonPanel.add(buttons[i]);
+        }
+
         return buttonPanel;
     }
 
@@ -60,50 +74,8 @@ public class CalcGUIV1 extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton cmdButton = (JButton) e.getSource();
-        if (cmdButton == buttons[0] || cmdButton == buttons[1]  || cmdButton == buttons[2]  ||
-                cmdButton == buttons[3]  || cmdButton == buttons[4]  || cmdButton == buttons[5]  ||
-                cmdButton == buttons[6]  || cmdButton == buttons[7]  || cmdButton == buttons[8]  ||
-                cmdButton == buttons[9] ) { // 0-9 버튼
-            if (calculator.isOperand1Set() && calculator.isOperatorSet()) { // 첫 번째 피연산자와 연산자가 지정되었다면 두 번째 피연산자 값으로 사용
-                int num2 = Integer.parseInt(cmdButton.getText());
-                calculator.setOperand2(num2);
-                display.setText("" + num2);
-                calculator.setOperand2Set(true);
-            }
-            else {  // 첫 번째 피연산자 값 지정
-                int num1 = Integer.parseInt(cmdButton.getText());
-                display.setText("" + num1);
-                calculator.setOperand1(num1);
-                calculator.setOperand1Set(true);
-            }
-        }
-        else if (cmdButton == buttons[14]) { // = 버튼
-            int result = 0;
-            if (calculator.isOperand1Set() && calculator.isOperand2Set() && calculator.isOperatorSet()) { // 두 개 피 연산자값과 연산자가 지정되었다면
-                if (calculator.getOperator() == '+') {
-                    result = calculator.getOperand1() + calculator.getOperand2();
-                }
-                else if (calculator.getOperator() == '-') {
-                    result = calculator.getOperand1() - calculator.getOperand2();
-                }
-                else if (calculator.getOperator() == '*') {
-                    result = calculator.getOperand1() * calculator.getOperand2();
-                }
-                else if (calculator.getOperator() == '/') {
-                    result = calculator.getOperand1() / calculator.getOperand2();
-                }
-            }
-            display.setText("" + result);
-            calculator.clearFlags();
-        }
-        else if (cmdButton == buttons[10] || cmdButton == buttons[11] ||
-                cmdButton == buttons[12] || cmdButton == buttons[13]) { // +, -, *, / 버튼
-            if (calculator.isOperand1Set()) {  // 첫 번째 피연산자 값이 지정되어야만 연산자 처리 가능
-                calculator.setOperatorSet(true);
-                calculator.setOperator(cmdButton.getText().charAt(0));
-            }
-        }
+        ((Command) e.getSource()).execute();
+
     }
 
     public static void main(String[] args) {
