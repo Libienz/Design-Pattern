@@ -15,6 +15,8 @@ public class State_0 implements State{
         japangi.setMsgText("돈을 넣은 후에 눌러주세요");
     }
 
+    //보면 모든 오버라이드된 메소드에서 비슷한 형태 반복 .. 부모로 빼면 깔끔할 수 있다고 교수님께서 말씀
+    //템플릿과 엮어서 해결할 수도 있을 듯 문제 나올지도??
     @Override
     public void addHundread() {
         japangi.setBalance(japangi.getBalance()+100);
