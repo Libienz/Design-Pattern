@@ -22,5 +22,10 @@ class SepiaImageConverter extends ImageConverter{
                 image.setRGB(x, y, new Color(outputRed, outputGreen, outputBlue).getRGB());
             }
         }
+        try {
+            ImageIO.write(image, "png", new File("s_" + HOUSE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
