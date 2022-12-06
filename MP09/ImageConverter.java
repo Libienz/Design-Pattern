@@ -5,6 +5,11 @@ import java.io.File;
 import java.io.IOException;
 
 public abstract class ImageConverter {
+
+
+    //내가 한 것보다 훨씬 겹치는 분 합칠 수 있음 템플릿의 성질 잘 생각하자
+    //여튼 겹치지 않는 부분을 추상 메서드로 빼면 된다.
+    //나중에 다시 만들어보자
     protected final String HOUSE = "house.png"; // 원본 영상 파일 이름
 
     public abstract void convert(BufferedImage img);
