@@ -1,5 +1,7 @@
 import javax.swing.*;
 
+//요청을 객체화 시킨다!!
+
 public class MultiplyCommandButton extends JButton implements Command {
     Calculator calculator;
     JLabel display;
